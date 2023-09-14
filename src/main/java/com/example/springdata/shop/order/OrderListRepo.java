@@ -1,4 +1,4 @@
-package com.example.springdata.shop;
+package com.example.springdata.shop.order;
 
 import java.util.ArrayList;
 import java.util.List;
