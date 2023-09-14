@@ -1,7 +1,6 @@
 package com.example.springdata.shop;
 
 import com.example.springdata.shop.order.Order;
-import com.example.springdata.shop.order.OrderMapRepo;
 import com.example.springdata.shop.order.OrderRepo;
 import com.example.springdata.shop.order.OrderStatus;
 import com.example.springdata.shop.product.Product;
@@ -18,7 +17,11 @@ import java.util.UUID;
 @RequestMapping("/shop")
 public class ShopController {
     private ProductRepo productRepo = new ProductRepo();
-    private OrderRepo orderRepo = new OrderMapRepo();
+    private OrderRepo orderRepo;
+
+    public ShopController(OrderRepo orderRepo) {
+        this.orderRepo = orderRepo;
+    }
 
     @PostMapping("/orders")
     public Order addOrder(@RequestBody List<String> productIds) throws ProductNotAvailableException {
@@ -31,19 +34,19 @@ public class ShopController {
 
         Order newOrder = new Order(UUID.randomUUID().toString(), products, OrderStatus.PROCESSING, Instant.now());
 
-        return orderRepo.addOrder(newOrder);
+        return orderRepo.save(newOrder);
     }
 
     @GetMapping("/orders")
     public List<Order> findAllOrders(@RequestParam OrderStatus status) {
-        return orderRepo.findAllOrders(status);
+        return orderRepo.findAllBy(status);
     }
 
     @PutMapping("/orders/{orderId}")
     public void updateOrder(@PathVariable String orderId, @RequestParam OrderStatus newStatus) {
         Order oldOrder = orderRepo.getOrderById(orderId);
-        orderRepo.removeOrder(orderId);
+        orderRepo.removeOrderBy(orderId);
         Order newOrder = oldOrder.withStatus(newStatus);
-        orderRepo.addOrder(newOrder);
+        orderRepo.save(newOrder);
     }
 }
