@@ -1,4 +1,4 @@
-package com.example.springdata.shop;
+package com.example.springdata.shop.product;
 
 import java.util.ArrayList;
 import java.util.List;

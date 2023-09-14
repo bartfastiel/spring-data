@@ -1,5 +1,12 @@
 package com.example.springdata.shop;
 
+import com.example.springdata.shop.order.Order;
+import com.example.springdata.shop.order.OrderMapRepo;
+import com.example.springdata.shop.order.OrderRepo;
+import com.example.springdata.shop.order.OrderStatus;
+import com.example.springdata.shop.product.Product;
+import com.example.springdata.shop.product.ProductNotAvailableException;
+import com.example.springdata.shop.product.ProductRepo;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
