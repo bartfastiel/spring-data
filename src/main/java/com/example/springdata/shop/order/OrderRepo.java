@@ -1,16 +1,14 @@
 package com.example.springdata.shop.order;
 
+import org.springframework.data.mongodb.repository.MongoRepository;
+
 import java.util.List;
 
-public interface OrderRepo {
-
-    List<Order> getOrders();
+public interface OrderRepo extends MongoRepository<Order, String> {
 
     Order getOrderById(String id);
 
-    Order addOrder(Order newOrder);
+    void removeOrderBy(String id);
 
-    void removeOrder(String id);
-
-    List<Order> findAllOrders(OrderStatus status);
+    List<Order> findAllBy(OrderStatus status);
 }
